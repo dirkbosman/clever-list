@@ -12,7 +12,6 @@
     <br />
 
     // entries go here
-
     <ul class="entries">
       <li class="entry">
         <label for="tE1"> 13/07/2020</label>
@@ -25,11 +24,36 @@
 
     <a href="archive.html">archive</a>
     <script>
-      const items = [];
       const text_input = document.getElementById("whatToDo");
-      console.log(text_input);
       const ul_list = document.getElementsByClassName("entries")[0];
-      console.log(ul_list);
+
+      let todo_str = localStorage.get("todoList");
+      // parse todo_str to todo_items
+      const todo_items = [];
+
+      function add() {
+        //will use append
+        //will add new todo to the todo_items
+        //will update localstorage "todoList"
+      }
+      /*
+            (a) todos: “text;<state>”;“text;<state>”;
+            (b) archived: “text;<state>;”
+      */
+      function markAsDone() {
+        //will use remove
+        //will change state of todo to done
+        //will update localstorage "todoList"
+      }
+
+      //a
+      function archive() {
+        //will archive item from to_do item or done list
+      }
+
+      function remove() {
+        //will use remove from local_storage or DOM
+      }
 
       function append() {
         // li
@@ -62,6 +86,8 @@
 
         ul_list.appendChild(li);
       }
+
+      // localStorage.clear();
     </script>
   </body>
 </html>
