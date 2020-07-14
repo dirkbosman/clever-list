@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Parcel Sandbox</title>
+    <meta charset="UTF-8" />
+  </head>
+
+  <body>
+    <input id="whatToDo" placeholder="what to do" />
+    <button onclick="append()">create</button>
+
+    <br />
+
+    // entries go here
+
+    <ul class="entries">
+      <li class="entry">
+        <label for="tE1"> 13/07/2020</label>
+        <input id="tE1" value="what to do" />
+        <button>edit</button>
+        <button>done</button>
+        <button>archive</button>
+      </li>
+    </ul>
+
+    <a href="archive.html">archive</a>
+    <script>
+      const items = [];
+      const text_input = document.getElementById("whatToDo");
+      console.log(text_input);
+      const ul_list = document.getElementsByClassName("entries")[0];
+      console.log(ul_list);
+
+      function append() {
+        // li
+        const li = document.createElement("li");
+        li.classList.add("entry");
+
+        // label
+        const label = document.createElement("label");
+        label.for = "tE1";
+        li.appendChild(label);
+
+        // input
+        const input = document.createElement("input");
+        input.id = "tE2";
+        input.value = text_input.value;
+        li.appendChild(input);
+
+        // buttons
+        const button_edit = document.createElement("button");
+        button_edit.innerHTML = "edit";
+        li.appendChild(button_edit);
+
+        const button_done = document.createElement("button");
+        button_done.innerHTML = "done";
+        li.appendChild(button_done);
+
+        const button_archive = document.createElement("button");
+        button_archive.innerHTML = "archive";
+        li.appendChild(button_archive);
+
+        ul_list.appendChild(li);
+      }
+    </script>
+  </body>
+</html>
