@@ -40,11 +40,12 @@
 
         if (text_input.value !== "") {
           // add data to toDoListItems
-          toDoListItems.push(new ToDo(text_input.value, false));
+          const item = new ToDo(text_input.value, false);
+          toDoListItems.push(item);
           // save data to local storage / update local storage
           saveData();
           // append to DOM
-          appendEntry(toDoListItems[toDoListItems.length - 1]);
+          appendEntry(item);
           text_input.value = "";
         } else {
           alert("Please enter value");

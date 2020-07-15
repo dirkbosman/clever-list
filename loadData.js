@@ -1,3 +1,8 @@
+function ToDo(content, completed) {
+  this.content = content;
+  this.completed = completed;
+}
+
 // loading data from localstorage to JS
 function loadData() {
   let strToDoList = localStorage.getItem("todoList");
@@ -16,11 +21,6 @@ function loadData() {
     }
   }
   return toDoListItems;
-}
-
-function ToDo(content, completed) {
-  this.content = content;
-  this.completed = completed;
 }
 
 function saveData() {
