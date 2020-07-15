@@ -24,21 +24,20 @@
     <!-- if item_list length is = 0 add placeholder, otherwise delete it -->
 
     <script>
-      // load data into to todo_items
-      let todo_items = loadData();
-      todo_items.forEach((element) => {
+      // load data into to toDoListItems
+      let toDoListItems = loadData();
+      toDoListItems.forEach((element) => {
         // append only the "text" in the string
-        append(element);
+        appendEntry(element);
       });
-      di;
 
       // loading data from localstorage to JS
       function loadData() {
-        let todo_str = localStorage.getItem("todoList");
-        const todo_items = [];
+        let strToDoList = localStorage.getItem("todoList");
+        const toDoListItems = [];
 
-        if (todo_str && todo_str !== "") {
-          let items = todo_str.split(";");
+        if (strToDoList && strToDoList !== "") {
+          let items = strToDoList.split(";");
           // "text;done;" --> "["text","done",""]"
           // still to do: set item to "open" by default
 
@@ -46,86 +45,79 @@
             const text = items[i];
             const done = items[i + 1] === "done" ? true : false;
             // array
-            todo_items.push([text, done]);
+            toDoListItems.push(new ToDo(text, done));
           }
         }
-        return todo_items;
+        return toDoListItems;
+      }
+
+      function ToDo(content, completed) {
+        this.content = content;
+        this.completed = completed;
       }
 
       function saveData() {
         let data = "";
         // [[text,done]]
-        for (let i = 0; i < todo_items.length; i++) {
-          const done = todo_items[i][1] ? "done" : "open";
-          data += todo_items[i][0] + ";" + done + ";";
+        for (let i = 0; i < toDoListItems.length; i++) {
+          const done = toDoListItems[i].completed ? "done" : "open";
+          data += toDoListItems[i].content + ";" + done + ";";
         }
         // string
         localStorage.setItem("todoList", data);
-      }
-
-      /* todos: “text;<state>”;“text;<state>”; archived: “text;<state>;” */
-      function markAsDone() {
-        //will use remove
-        //will change state of todo to done
-        //will update localstorage "todoList"
-      }
-
-      //a
-      function archive() {
-        //will archive item from to_do item or done list
-      }
-
-      function remove() {
-        //will use remove from local_storage or DOM
       }
 
       function add() {
         const text_input = document.getElementById("whatToDo");
 
         if (text_input.value !== "") {
-          // add data to todo_items
-          todo_items.push([text_input.value, false]);
+          // add data to toDoListItems
+          toDoListItems.push(new ToDo(text_input.value, false));
           // save data to local storage / update local storage
           saveData();
           // append to DOM
-          append(todo_items[todo_items.length - 1]);
+          appendEntry(toDoListItems[toDoListItems.length - 1]);
           text_input.value = "";
         } else {
           alert("Please enter value");
         }
       }
 
-      function append(todoEntry) {
+      function appendEntry(todoObj) {
         // *CREATE* to do item
         const li = document.createElement("li");
         li.classList.add("entry");
 
-        const label = document.createElement("label");
-        label.for = "tE1";
-        li.appendChild(label);
-
         const input = document.createElement("input");
-        input.id = "tE2";
-        input.value = todoEntry[0];
+        input.value = todoObj.content;
         input.onkeyup = (e) => {
-          todoEntry[0] = input.value;
+          todoObj.content = input.value;
           saveData();
         };
         li.appendChild(input);
 
-        // *EDIT* to-do item
-        const button_edit = document.createElement("button");
-        // button_edit.innerHTML = "edit";
-        button_edit.innerHTML = "save";
-        li.appendChild(button_edit);
-
         // mark to-do item as *DONE*
+        const button_done = createButtonDone(todoObj, input);
+        li.appendChild(button_done);
+
+        // mark to-do item as *ARCHIVE*
+        const button_archive = createRemoveButton(todoObj, () =>
+          li.parentNode.removeChild(li)
+        );
+        li.appendChild(button_archive);
+
+        const ul_list = document.getElementsByClassName("entries")[0];
+        ul_list.appendChild(li);
+        // ul_list.reverse();
+      }
+
+      function createButtonDone(todoObj, input) {
         const button_done = document.createElement("button");
         button_done.innerHTML = "mark completed";
         button_done.onclick = function (e) {
           input.toggleAttribute("readonly");
-          todoEntry[1] = !todoEntry[1];
-          if (todoEntry[1]) {
+          todoObj.completed = !todoObj.completed;
+          if (todoObj.completed) {
             button_done.innerHTML = "mark uncompleted";
           } else {
             button_done.innerHTML = "mark completed";
@@ -133,30 +125,28 @@
           saveData();
           // also: move item to done list?
         };
-        if (todoEntry[1]) {
+        if (todoObj.completed) {
           // if supposed to be done
           button_done.onclick();
         }
-        li.appendChild(button_done);
 
-        // mark to-do item as *ARCHIVE*
+        return button_done;
+      }
+
+      function createRemoveButton(todoObj, removeYourself) {
         const button_archive = document.createElement("button");
         button_archive.innerHTML = "remove";
         button_archive.onclick = function (e) {
           const result = confirm("Do you really want to delete permanently?");
           if (result) {
-            todo_items = todo_items.filter(
-              (element) => element[0] !== todoEntry[0]
+            toDoListItems = toDoListItems.filter(
+              (element) => element.content !== todoObj.content
             );
             saveData();
-            li.parentNode.removeChild(li);
+            removeYourself();
           }
         };
-        li.appendChild(button_archive);
-
-        const ul_list = document.getElementsByClassName("entries")[0];
-        ul_list.appendChild(li);
-        // ul_list.reverse();
+        return button_archive;
       }
     </script>
   </body>
