@@ -1,3 +1,4 @@
+// class
 function ToDo(content, completed) {
   this.content = content;
   this.completed = completed;

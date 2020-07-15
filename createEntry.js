@@ -9,11 +9,13 @@ function appendEntry(todoObj) {
     todoObj.content = input.value;
     saveData();
   };
-  li.appendChild(input);
 
   // mark to-do item as *DONE*
-  const button_done = createButtonDone(todoObj, input);
-  li.appendChild(button_done);
+
+  const checkbox = createCheckBox(todoObj, input);
+  li.appendChild(checkbox);
+
+  li.appendChild(input);
 
   // mark to-do item as *ARCHIVE*
   const button_archive = createRemoveButton(todoObj, () =>
@@ -21,34 +23,36 @@ function appendEntry(todoObj) {
   );
   li.appendChild(button_archive);
 
-  const ul_list = document.getElementsByClassName("entries")[0];
+  const ul_list = document.getElementById(todoObj.completed ? "done" : "open");
   ul_list.appendChild(li);
   // ul_list.reverse();
 }
 
-function createButtonDone(todoObj, input) {
-  const button_done = document.createElement("button");
-  button_done.innerHTML = "mark completed";
-  button_done.onclick = function (e) {
-    input.toggleAttribute("readonly");
-    todoObj.completed = !todoObj.completed;
-    if (todoObj.completed) {
-      button_done.innerHTML = "mark uncompleted";
-      const mainDiv = document.getElementById("done");
-      const done_li = document.createElement("li");
-      done_li.classList.add("entry");
-    } else {
-      button_done.innerHTML = "mark completed";
-    }
-    saveData();
-    // also: move item to done list?
-  };
-  if (todoObj.completed) {
-    // if supposed to be done
-    button_done.onclick();
-  }
+function createCheckBox(todoObj, input) {
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
 
-  return button_done;
+  // <input type="checkbox" checked="checked">
+
+  //generic snippet to move item to do list
+  checkbox.checked = todoObj.completed;
+  checkbox.onclick = function (e) {
+    input.setAttribute("readonly", checkbox.checked);
+    todoObj.completed = checkbox.checked;
+    // remove to do item from *open-list*
+    const li = checkbox.parentNode;
+    li.parentNode.removeChild(li);
+    // add to do item from *done-list*
+    const list = document.getElementById(checkbox.checked ? "done" : "open");
+    list.appendChild(li);
+
+    saveData();
+  };
+  return checkbox;
+}
+
+function doneGetInnerHTML(completed) {
+  return completed ? "mark uncompleted" : "mark completed";
 }
 
 function createRemoveButton(todoObj, removeYourself) {

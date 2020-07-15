@@ -9,15 +9,18 @@
   <body>
     <div class="main">
       <div class="create">
+        <h1>Add to do</h1>
         <input id="whatToDo" placeholder="add item ..." required />
         <button id="create-btn" onclick="add()">create</button>
         <br />
       </div>
       <div class="list open">
-        <ul class="entries"></ul>
+        <h1>To Do List</h1>
+        <ul id="open" class="entries"></ul>
       </div>
-      <div id="done" class="list done">
-        <!-- <ul class="entries"></ul> -->
+      <div class="list done">
+        <h1>Done List</h1>
+        <ul id="done" class="entries"></ul>
       </div>
       <div class="footer">
         <a href="archive.html">archive</a>
