@@ -1,0 +1,48 @@
+.main {
+  text-align: center;
+  padding-top: 40px;
+}
+
+#whatToDo {
+  padding: 4px;
+}
+
+li {
+  padding: 5px;
+}
+
+.create {
+  background-color: lightgreen;
+  padding: 20px;
+}
+
+#create-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 4px 8px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.list {
+  background-color: lightskyblue;
+  padding: 20px;
+  text-decoration: none;
+}
+
+.footer {
+  background-color: lightsalmon;
+  padding: 20px;
+}
+
+ul {
+  -moz-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+ul > li {
+  -moz-transform: rotate(-180deg);
+  -webkit-transform: rotate(-180deg);
+  transform: rotate(-180deg);
+  list-style-type: none;
+}

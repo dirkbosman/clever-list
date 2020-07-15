@@ -3,18 +3,26 @@
   <head>
     <title>Parcel Sandbox</title>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
-    <input id="whatToDo" placeholder="what to do" />
-    <button onclick="add()">create</button>
+    <div class="main">
+      <div class="create">
+        <input id="whatToDo" placeholder="what to do" />
+        <button id="create-btn" onclick="add()">create</button>
+        <br />
+      </div>
+      <div class="list">
+        <ul class="entries"></ul>
+      </div>
+      <div class="footer">
+        <a href="archive.html">archive</a>
+      </div>
+    </div>
 
-    <br />
+    <!-- // entries go here -->
 
-    // entries go here
-    <ul class="entries"></ul>
-
-    <a href="archive.html">archive</a>
     <script>
       // parse todo_str to todo_items
       let todo_items = [];
@@ -49,10 +57,7 @@
         localStorage.setItem("todoList", data);
       }
 
-      /*
-            (a) todos: “text;<state>”;“text;<state>”;
-            (b) archived: “text;<state>;”
-      */
+      /* todos: “text;<state>”;“text;<state>”; archived: “text;<state>;” */
       function markAsDone() {
         //will use remove
         //will change state of todo to done
@@ -75,35 +80,33 @@
           // add data to todo_items
           todo_items.push([text_input.value, false]);
           // save data to local storage / update local storage
-          //
           saveData();
-
           // append to DOM
           append(todo_items[todo_items.length - 1]);
+          text_input.value = "";
         }
       }
 
       function append(todoEntry) {
-        // li
+        // *CREATE* to do item
         const li = document.createElement("li");
         li.classList.add("entry");
 
-        // label
         const label = document.createElement("label");
         label.for = "tE1";
         li.appendChild(label);
 
-        // input
         const input = document.createElement("input");
         input.id = "tE2";
         input.value = todoEntry[0];
         li.appendChild(input);
 
-        // buttons
+        // *EDIT* to-do item
         const button_edit = document.createElement("button");
         button_edit.innerHTML = "edit";
         li.appendChild(button_edit);
 
+        // mark to-do item as *DONE*
         const button_done = document.createElement("button");
         button_done.innerHTML = "done";
         button_done.onclick = function (e) {
@@ -118,14 +121,14 @@
         }
         li.appendChild(button_done);
 
-        // form: should not be empty
-
+        // mark to-do item as *ARCHIVE*
         const button_archive = document.createElement("button");
         button_archive.innerHTML = "archive";
         li.appendChild(button_archive);
 
         const ul_list = document.getElementsByClassName("entries")[0];
         ul_list.appendChild(li);
+        // ul_list.reverse();
       }
 
       // load data into to todo_items
@@ -134,6 +137,8 @@
         // append only the "text" in the string
         append(element);
       });
+
+      // todo_items.reverse();
     </script>
   </body>
 </html>
