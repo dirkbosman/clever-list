@@ -13,8 +13,11 @@
         <button id="create-btn" onclick="add()">create</button>
         <br />
       </div>
-      <div class="list">
+      <div class="list open">
         <ul class="entries"></ul>
+      </div>
+      <div id="done" class="list done">
+        <!-- <ul class="entries"></ul> -->
       </div>
       <div class="footer">
         <a href="archive.html">archive</a>
@@ -127,6 +130,10 @@
           todoEntry[1] = !todoEntry[1];
           if (todoEntry[1]) {
             button_done.innerHTML = "mark uncompleted";
+
+            const mainDiv = document.getElementById("done");
+            const done_li = document.createElement("li");
+            done_li.classList.add("entry");
           } else {
             button_done.innerHTML = "mark completed";
           }
