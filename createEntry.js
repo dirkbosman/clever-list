@@ -34,6 +34,9 @@ function createButtonDone(todoObj, input) {
     todoObj.completed = !todoObj.completed;
     if (todoObj.completed) {
       button_done.innerHTML = "mark uncompleted";
+      const mainDiv = document.getElementById("done");
+      const done_li = document.createElement("li");
+      done_li.classList.add("entry");
     } else {
       button_done.innerHTML = "mark completed";
     }
@@ -57,6 +60,7 @@ function createRemoveButton(todoObj, removeYourself) {
       toDoListItems = toDoListItems.filter(
         (element) => element.content !== todoObj.content
       );
+
       saveData();
       removeYourself();
     }
