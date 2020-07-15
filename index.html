@@ -115,15 +115,21 @@
 
         // *EDIT* to-do item
         const button_edit = document.createElement("button");
-        button_edit.innerHTML = "edit";
+        // button_edit.innerHTML = "edit";
+        button_edit.innerHTML = "save";
         li.appendChild(button_edit);
 
         // mark to-do item as *DONE*
         const button_done = document.createElement("button");
-        button_done.innerHTML = "done";
+        button_done.innerHTML = "mark completed";
         button_done.onclick = function (e) {
           input.toggleAttribute("readonly");
           todoEntry[1] = !todoEntry[1];
+          if (todoEntry[1]) {
+            button_done.innerHTML = "mark uncompleted";
+          } else {
+            button_done.innerHTML = "mark completed";
+          }
           saveData();
           // also: move item to done list?
         };
