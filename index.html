@@ -7,35 +7,48 @@
 
   <body>
     <input id="whatToDo" placeholder="what to do" />
-    <button onclick="append()">create</button>
+    <button onclick="add()">create</button>
 
     <br />
 
     // entries go here
-    <ul class="entries">
-      <li class="entry">
-        <label for="tE1"> 13/07/2020</label>
-        <input id="tE1" value="what to do" />
-        <button>edit</button>
-        <button>done</button>
-        <button>archive</button>
-      </li>
-    </ul>
+    <ul class="entries"></ul>
 
     <a href="archive.html">archive</a>
     <script>
-      const text_input = document.getElementById("whatToDo");
-      const ul_list = document.getElementsByClassName("entries")[0];
-
-      let todo_str = localStorage.get("todoList");
       // parse todo_str to todo_items
-      const todo_items = [];
+      let todo_items = [];
 
-      function add() {
-        //will use append
-        //will add new todo to the todo_items
-        //will update localstorage "todoList"
+      // loading data from localstorage to JS
+      function loadData() {
+        let todo_str = localStorage.getItem("todoList");
+        if (todo_str && todo_str !== "") {
+          todo_items = [];
+          let items = todo_str.split(";");
+          // "text;done;" --> "["text","done",""]"
+          // still to do: set item to "open" by default
+
+          // debugger;
+          for (let i = 0; i < items.length - 1; i += 2) {
+            const text = items[i];
+            const done = items[i + 1] === "done" ? true : false;
+            // array
+            todo_items.push([text, done]);
+          }
+        }
       }
+
+      function saveData() {
+        let data = "";
+        // [[text,done]]
+        for (let i = 0; i < todo_items.length; i++) {
+          const done = todo_items[i][1] ? "done" : "open";
+          data += todo_items[i][0] + ";" + done + ";";
+        }
+        // string
+        localStorage.setItem("todoList", data);
+      }
+
       /*
             (a) todos: “text;<state>”;“text;<state>”;
             (b) archived: “text;<state>;”
@@ -55,7 +68,22 @@
         //will use remove from local_storage or DOM
       }
 
-      function append() {
+      function add() {
+        const text_input = document.getElementById("whatToDo");
+
+        if (text_input.value !== "") {
+          // add data to todo_items
+          todo_items.push([text_input.value, false]);
+          // save data to local storage / update local storage
+          //
+          saveData();
+
+          // append to DOM
+          append(todo_items[todo_items.length - 1]);
+        }
+      }
+
+      function append(todoEntry) {
         // li
         const li = document.createElement("li");
         li.classList.add("entry");
@@ -68,7 +96,7 @@
         // input
         const input = document.createElement("input");
         input.id = "tE2";
-        input.value = text_input.value;
+        input.value = todoEntry[0];
         li.appendChild(input);
 
         // buttons
@@ -78,16 +106,34 @@
 
         const button_done = document.createElement("button");
         button_done.innerHTML = "done";
+        button_done.onclick = function (e) {
+          input.toggleAttribute("readonly");
+          todoEntry[1] = !todoEntry[1];
+          saveData();
+          // also: move item to done list?
+        };
+        if (todoEntry[1]) {
+          // if supposed to be done
+          button_done.onclick();
+        }
         li.appendChild(button_done);
+
+        // form: should not be empty
 
         const button_archive = document.createElement("button");
         button_archive.innerHTML = "archive";
         li.appendChild(button_archive);
 
+        const ul_list = document.getElementsByClassName("entries")[0];
         ul_list.appendChild(li);
       }
 
-      // localStorage.clear();
+      // load data into to todo_items
+      loadData();
+      todo_items.forEach((element) => {
+        // append only the "text" in the string
+        append(element);
+      });
     </script>
   </body>
 </html>
