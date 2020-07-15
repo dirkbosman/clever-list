@@ -4,6 +4,7 @@ function appendEntry(todoObj) {
   li.classList.add("entry");
 
   const input = document.createElement("input");
+  input.classList.add("todoContent");
   input.value = todoObj.content;
   input.onkeyup = (e) => {
     todoObj.content = input.value;
@@ -30,14 +31,13 @@ function appendEntry(todoObj) {
 
 function createCheckBox(todoObj, input) {
   const checkbox = document.createElement("input");
-  checkbox.type = "checkbox";
-
-  // <input type="checkbox" checked="checked">
-
-  //generic snippet to move item to do list
+  checkbox.type = "checkbox"; //generic snippet to move item to do list
   checkbox.checked = todoObj.completed;
+  if (checkbox.checked) {
+    input.toggleAttribute("readonly");
+  }
   checkbox.onclick = function (e) {
-    input.setAttribute("readonly", checkbox.checked);
+    input.toggleAttribute("readonly");
     todoObj.completed = checkbox.checked;
     // remove to do item from *open-list*
     const li = checkbox.parentNode;

@@ -1,6 +1,36 @@
+:root {
+  --accent: #3c91e6;
+  --white: #fbfefb;
+  --black: #000000;
+  --green: rgb(113, 209, 34);
+}
+
+header {
+  font-family: "Roboto Mono", "Open Sans", sans-serif;
+  font-weight: normal;
+  color: var(--white);
+  background-color: var(--green);
+  margin: 0;
+  padding: 10px;
+}
+
+.nav-container a {
+  text-decoration: none;
+}
+
+h1 {
+  font-family: "Roboto Mono", "Open Sans", sans-serif;
+}
+
+.logo {
+  height: 30px;
+  width: 30px;
+  margin: 0 auto;
+  padding-left: 20px;
+}
+
 .main {
   text-align: center;
-  padding-top: 40px;
 }
 
 #whatToDo {
@@ -36,6 +66,23 @@ li {
   text-decoration: none;
 }
 
+/* .list.done > li { */
+#done > li {
+  background-color: rgb(135, 250, 215);
+  text-decoration: line-through;
+  border: none;
+  outline: none;
+  padding: 5px;
+  margin: 5px;
+}
+
+#done .todoContent {
+  background-color: inherit;
+  text-decoration: line-through;
+  border: none;
+  outline: none;
+}
+
 .footer {
   background-color: lightsalmon;
   padding: 20px;
@@ -51,4 +98,26 @@ ul > li {
   -webkit-transform: rotate(-180deg);
   transform: rotate(-180deg);
   list-style-type: none;
+}
+
+#whatToDo:not(valid) {
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position: 20px 20px;
+}
+
+/* Show green borders when valid */
+#whatToDo:valid {
+  background-color: inherit;
+  background: url(img/clever.png);
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position: 20px 20px;
+}
+
+#alert-danger {
+  color: #b63e33;
+  padding: 5px;
+
+  text-align: center;
 }

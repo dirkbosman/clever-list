@@ -4,14 +4,31 @@
     <title>Parcel Sandbox</title>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto"
+      rel="stylesheet"
+    />
   </head>
 
   <body>
+    <header>
+      <div class="nav-container">
+        <h1>
+          <img class="logo" src="img/clever.png" alt="logo" />
+          <a href="/">Clever</a>
+        </h1>
+      </div>
+    </header>
+
     <div class="main">
       <div class="create">
         <h1>Add to do</h1>
-        <input id="whatToDo" placeholder="add item ..." required />
-        <button id="create-btn" onclick="add()">create</button>
+        <div style="display: none;" id="alert-danger">
+          Please add item text in box below.
+        </div>
+        <input id="whatToDo" placeholder="what to be done" required />
+        <button id="create-btn" onclick="add()">Create</button>
+
         <br />
       </div>
       <div class="list open">
@@ -21,9 +38,6 @@
       <div class="list done">
         <h1>Done List</h1>
         <ul id="done" class="entries"></ul>
-      </div>
-      <div class="footer">
-        <a href="archive.html">archive</a>
       </div>
     </div>
 
@@ -41,7 +55,7 @@
       function add() {
         const text_input = document.getElementById("whatToDo");
 
-        if (text_input.value !== "") {
+        if (text_input.value) {
           // add data to toDoListItems
           const item = new ToDo(text_input.value, false);
           toDoListItems.push(item);
@@ -51,7 +65,12 @@
           appendEntry(item);
           text_input.value = "";
         } else {
-          alert("Please enter value");
+          document.getElementById("alert-danger").style.display = "block";
+          setTimeout(
+            () =>
+              (document.getElementById("alert-danger").style.display = "none"),
+            1000
+          );
         }
       }
     </script>
