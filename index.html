@@ -9,7 +9,7 @@
   <body>
     <div class="main">
       <div class="create">
-        <input id="whatToDo" placeholder="what to do" />
+        <input id="whatToDo" placeholder="add item ..." required />
         <button id="create-btn" onclick="add()">create</button>
         <br />
       </div>
@@ -21,22 +21,27 @@
       </div>
     </div>
 
-    <!-- // entries go here -->
+    <!-- if item_list length is = 0 add placeholder, otherwise delete it -->
 
     <script>
-      // parse todo_str to todo_items
-      let todo_items = [];
+      // load data into to todo_items
+      let todo_items = loadData();
+      todo_items.forEach((element) => {
+        // append only the "text" in the string
+        append(element);
+      });
+      di;
 
       // loading data from localstorage to JS
       function loadData() {
         let todo_str = localStorage.getItem("todoList");
+        const todo_items = [];
+
         if (todo_str && todo_str !== "") {
-          todo_items = [];
           let items = todo_str.split(";");
           // "text;done;" --> "["text","done",""]"
           // still to do: set item to "open" by default
 
-          // debugger;
           for (let i = 0; i < items.length - 1; i += 2) {
             const text = items[i];
             const done = items[i + 1] === "done" ? true : false;
@@ -44,6 +49,7 @@
             todo_items.push([text, done]);
           }
         }
+        return todo_items;
       }
 
       function saveData() {
@@ -84,6 +90,8 @@
           // append to DOM
           append(todo_items[todo_items.length - 1]);
           text_input.value = "";
+        } else {
+          alert("Please enter value");
         }
       }
 
@@ -99,6 +107,10 @@
         const input = document.createElement("input");
         input.id = "tE2";
         input.value = todoEntry[0];
+        input.onkeyup = (e) => {
+          todoEntry[0] = input.value;
+          saveData();
+        };
         li.appendChild(input);
 
         // *EDIT* to-do item
@@ -123,22 +135,23 @@
 
         // mark to-do item as *ARCHIVE*
         const button_archive = document.createElement("button");
-        button_archive.innerHTML = "archive";
+        button_archive.innerHTML = "remove";
+        button_archive.onclick = function (e) {
+          const result = confirm("Do you really want to delete permanently?");
+          if (result) {
+            todo_items = todo_items.filter(
+              (element) => element[0] !== todoEntry[0]
+            );
+            saveData();
+            li.parentNode.removeChild(li);
+          }
+        };
         li.appendChild(button_archive);
 
         const ul_list = document.getElementsByClassName("entries")[0];
         ul_list.appendChild(li);
         // ul_list.reverse();
       }
-
-      // load data into to todo_items
-      loadData();
-      todo_items.forEach((element) => {
-        // append only the "text" in the string
-        append(element);
-      });
-
-      // todo_items.reverse();
     </script>
   </body>
 </html>
