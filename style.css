@@ -15,6 +15,7 @@ header {
 }
 
 .nav-container a {
+  color: black;
   text-decoration: none;
 }
 
@@ -54,6 +55,14 @@ li {
   border-radius: 5px;
 }
 
+#remove-btn {
+  background-color: #ca3a3a;
+  color: white;
+  padding: 4px 8px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
 .list.open {
   background-color: lightskyblue;
   padding: 20px;
@@ -66,7 +75,15 @@ li {
   text-decoration: none;
 }
 
-/* .list.done > li { */
+#open > li {
+  background-color: rgb(135, 250, 215);
+  text-decoration: line-through;
+  border: none;
+  outline: none;
+  padding: 5px;
+  margin: 5px;
+}
+
 #done > li {
   background-color: rgb(135, 250, 215);
   text-decoration: line-through;
@@ -118,6 +135,5 @@ ul > li {
 #alert-danger {
   color: #b63e33;
   padding: 5px;
-
   text-align: center;
 }
