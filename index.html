@@ -27,7 +27,7 @@
           Please add item text in box below.
         </div>
         <input id="whatToDo" placeholder="what to be done" required />
-        <button id="create-btn" onclick="add()">Create</button>
+        <button id="create-btn" onclick="">Create</button>
 
         <br />
       </div>
@@ -45,34 +45,10 @@
     <script src="loadData.js"></script>
     <script src="createEntry.js"></script>
     <script>
-      // load data into to toDoListItems
-      let toDoListItems = loadData();
-      toDoListItems.forEach((element) => {
-        // append only the "text" in the string
-        appendEntry(element);
-      });
+      const todo = new Todo();
 
-      function add() {
-        const text_input = document.getElementById("whatToDo");
-
-        if (text_input.value) {
-          // add data to toDoListItems
-          const item = new ToDo(text_input.value, false);
-          toDoListItems.push(item);
-          // save data to local storage / update local storage
-          saveData();
-          // append to DOM
-          appendEntry(item);
-          text_input.value = "";
-        } else {
-          document.getElementById("alert-danger").style.display = "block";
-          setTimeout(
-            () =>
-              (document.getElementById("alert-danger").style.display = "none"),
-            1000
-          );
-        }
-      }
+      // clear?
+      document.getElementById("create-btn").onclick = () => todo.add();
     </script>
   </body>
 </html>

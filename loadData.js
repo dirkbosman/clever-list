@@ -5,27 +5,29 @@ function ToDo(content, completed) {
 }
 
 // loading data from localstorage to JS
-function loadData() {
-  let strToDoList = localStorage.getItem("todoList");
-  const toDoListItems = [];
+class Data {
+  static load() {
+    const strToDoList = localStorage.getItem("todoList");
+    const toDoListItems = [];
 
-  if (strToDoList && strToDoList !== "") {
-    let items = strToDoList.split(";");
+    if (strToDoList && strToDoList !== "") {
+      let items = strToDoList.split(";");
 
-    for (let i = 0; i < items.length - 1; i += 2) {
-      const text = items[i];
-      const done = items[i + 1] === "done" ? true : false;
-      toDoListItems.push(new ToDo(text, done));
+      for (let i = 0; i < items.length - 1; i += 2) {
+        const text = items[i];
+        const done = items[i + 1];
+        toDoListItems.push(new ToDo(text, done));
+      }
     }
+    return toDoListItems;
   }
-  return toDoListItems;
-}
 
-function saveData() {
-  let data = "";
-  for (let i = 0; i < toDoListItems.length; i++) {
-    const done = toDoListItems[i].completed ? "done" : "open";
-    data += toDoListItems[i].content + ";" + done + ";";
+  static save(toDoListItems) {
+    let data = "";
+    for (let i = 0; i < toDoListItems.length; i++) {
+      const done = toDoListItems[i].completed;
+      data += toDoListItems[i].content + ";" + done + ";";
+    }
+    localStorage.setItem("todoList", data);
   }
-  localStorage.setItem("todoList", data);
 }
