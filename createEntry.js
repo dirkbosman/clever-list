@@ -58,6 +58,11 @@ function doneGetInnerHTML(completed) {
 function createRemoveButton(todoObj, removeYourself) {
   const button_archive = document.createElement("button");
   button_archive.innerHTML = "remove";
+
+  // myElement.id = "my-id";
+  button_archive.setAttribute("id", "remove-btn");
+  // button_archive.classList.add("remove-btn");
+  //
   button_archive.onclick = function (e) {
     const result = confirm("Do you really want to delete permanently?");
     if (result) {
