@@ -2,17 +2,18 @@
 
 class Todo {
   // when page is loaded it gets instantiated, because in html to-do object is created.
-  constructor() {
+  constructor(addID, input) {
     this.toDoListItems = Data.load();
     this.toDoListItems.forEach((item) => {
       // append only the "text" in the string
       this.appendEntry(new ToDoNode(this.toDoListItems, item));
     });
+    document.getElementById(addID).onclick = () => todo.add(input);
   }
 
   // when create button is clicked, this method is called.
-  add() {
-    const text_input = document.getElementById("whatToDo");
+  add(input) {
+    const text_input = document.getElementById(input);
 
     if (text_input.value) {
       // add data to this.toDoListItems
@@ -83,20 +84,28 @@ class ToDoNode {
     if (checkbox.checked) {
       input.toggleAttribute("readonly");
     }
-    const todoItem = this.todoItem;
-    checkbox.onclick = function (e) {
+    checkbox.onclick = this.getCheckboxOnclick(checkbox, input);
+    return checkbox;
+  }
+
+  getCheckboxOnclick(checkbox, input) {
+    return this.getSaveOnClick(() => {
       input.toggleAttribute("readonly");
-      todoItem.completed = checkbox.checked ? "done" : "open";
+      this.todoItem.completed = checkbox.checked ? "done" : "open";
       // remove to do item from *open-list*
       const li = checkbox.parentNode;
       li.parentNode.removeChild(li);
       // add to do item from *done-list*
       const list = document.getElementById(checkbox.checked ? "done" : "open");
       list.appendChild(li);
+    });
+  }
 
+  getSaveOnClick(doSth) {
+    return (e) => {
+      doSth();
       Data.save(this.toDoListItems);
     };
-    return checkbox;
   }
 
   createRemoveButton(removeYourself) {
@@ -106,17 +115,18 @@ class ToDoNode {
     // myElement.id = "my-id";
     button_archive.setAttribute("id", "remove-btn");
     // button_archive.classList.add("remove-btn");
-    const todo = this.todoItem;
-    const toDoListItems = this.toDoListItems;
-    button_archive.onclick = function (e) {
+    button_archive.onclick = this.getButtonOnclick(removeYourself);
+    return button_archive;
+  }
+
+  getButtonOnclick(removeYourself) {
+    return this.getSaveOnClick(() => {
       const result = confirm("Do you really want to delete permanently?");
       if (result) {
-        const index = toDoListItems.indexOf(todo);
-        toDoListItems.splice(index, 1);
-        Data.save(toDoListItems);
+        const index = this.toDoListItems.indexOf(this.todoItem);
+        this.toDoListItems.splice(index, 1);
         removeYourself();
       }
-    };
-    return button_archive;
+    });
   }
 }

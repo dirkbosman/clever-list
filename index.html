@@ -22,21 +22,19 @@
 
     <div class="main">
       <div class="create">
-        <h1>Add to do</h1>
+        <h1>New To-do</h1>
         <div style="display: none;" id="alert-danger">
-          Please add item text in box below.
+          Please add text below.
         </div>
-        <input id="whatToDo" placeholder="what to be done" required />
+        <input id="whatToDo" placeholder="What to do next?" required />
         <button id="create-btn" onclick="">Create</button>
-
-        <br />
       </div>
       <div class="list open">
-        <h1>To Do List</h1>
+        <h1>To-Do's</h1>
         <ul id="open" class="entries"></ul>
       </div>
       <div class="list done">
-        <h1>Done List</h1>
+        <h1>Done</h1>
         <ul id="done" class="entries"></ul>
       </div>
     </div>
@@ -45,10 +43,9 @@
     <script src="loadData.js"></script>
     <script src="createEntry.js"></script>
     <script>
-      const todo = new Todo();
+      const todo = new Todo("create-btn", "whatToDo");
 
       // clear?
-      document.getElementById("create-btn").onclick = () => todo.add();
     </script>
   </body>
 </html>

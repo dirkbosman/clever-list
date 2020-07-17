@@ -3,6 +3,7 @@
   --white: #fbfefb;
   --black: #000000;
   --green: rgb(113, 209, 34);
+  --red: #ca3a3a;
 }
 
 header {
@@ -36,6 +37,7 @@ h1 {
 
 #whatToDo {
   padding: 4px;
+  margin: 4px;
 }
 
 li {
@@ -56,7 +58,7 @@ li {
 }
 
 #remove-btn {
-  background-color: #ca3a3a;
+  background-color: var(--red);
   color: white;
   padding: 4px 8px;
   border: 1px solid black;
@@ -73,6 +75,7 @@ li {
   background-color: rgb(248, 250, 135);
   padding: 20px;
   text-decoration: none;
+  height: 700px;
 }
 
 #open > li {
@@ -136,4 +139,7 @@ ul > li {
   color: #b63e33;
   padding: 5px;
   text-align: center;
+  font-weight: bold;
+  padding-bottom: 10px;
+  font-family: "Roboto Mono", "Open Sans", sans-serif;
 }
