@@ -1,6 +1,6 @@
 // load data into to this.toDoListItems
 
-class Todo {
+class TodoList {
   // when page is loaded it gets instantiated, because in html to-do object is created.
   constructor(addID, input) {
     this.toDoListItems = Data.load();
