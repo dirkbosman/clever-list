@@ -78,17 +78,32 @@ li {
   height: 700px;
 }
 
+.todoContent {
+  margin: 10px;
+  border: 2px solid gray;
+  padding: 4px;
+}
+
+#open {
+  width: 100%;
+}
+
 #open > li {
-  background-color: rgb(135, 250, 215);
+  background-color: rgb(43, 198, 209);
   text-decoration: line-through;
   border: none;
   outline: none;
   padding: 5px;
   margin: 5px;
+  /* width: 100%; */
+}
+
+#done {
+  width: 100%;
 }
 
 #done > li {
-  background-color: rgb(135, 250, 215);
+  background-color: rgb(219, 192, 73);
   text-decoration: line-through;
   border: none;
   outline: none;
